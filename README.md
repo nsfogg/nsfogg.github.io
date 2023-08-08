@@ -1,1 +1,0 @@
-# nsfogg.github.io

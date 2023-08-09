@@ -139,6 +139,8 @@ nav ul li a:hover {
   line-height: 1.4;
   width: 50%;
   margin: auto;
+  padding: 0.5rem;
+  font-size: large;
 }
 
 .parent {

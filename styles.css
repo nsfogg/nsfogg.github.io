@@ -57,7 +57,6 @@ nav ul li a:hover {
 /* Projects section */
 #projects {
   background-color: #fff;
-  padding: 3rem 0;
   text-align: center; /* Center project titles and images */
 }
 
@@ -69,7 +68,8 @@ nav ul li a:hover {
 
 .project1 {
   text-align: center;
-  background-color: #eaa424;
+  background-color: #c0780e;
+  padding-top: 1rem;
   color:rgb(255, 255, 255)
 }
 
@@ -90,6 +90,34 @@ nav ul li a:hover {
   color: #333;
 }
 
+#timeline {
+  background-color: #ffffff;
+  padding: 3rem 0;
+}
+
+#timeline h1 {
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  background-color: #a00d0d;
+  color: #f5f5f5;
+  padding: 1rem;
+}
+
+#Enhancements {
+  background-color: #ffffff;
+  padding: 3rem 0;
+}
+
+#Enhancements h1 {
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  background-color: #a00d0d;
+  color: #f5f5f5;
+  padding: 1rem;
+}
+
 /* About section */
 #about {
   background-color: #ffffff;
@@ -104,33 +132,66 @@ nav ul li a:hover {
 
 .space {
   line-height: 1.4;
+  padding: 1rem;
 }
 
 .p1 {
   line-height: 1.4;
+  width: 50%;
+  margin: auto;
 }
 
 .parent {
-  padding: 2rem 2rem;  
-  text-align: center;
+  padding: 2rem;  
+  display: inline-flex
 }
 
 .child {
-  display: inline-block;
-  padding: 1rem 1rem;
   vertical-align:middle;
-  max-width: 50%
+  max-width: 50%;
+  margin: auto;
+}
+
+.emotion_list {
+  height: auto;
+  width: fit-content;
+}
+
+.container {
+  display: flex;
+  align-items: center; /* Vertically center items */
+  margin-bottom: 20px; /* Add spacing between projects */
+  text-align: right;
+  padding-left: 20rem;
+  padding-right: 20rem;
+}
+
+.container img {
+  max-width: 100%; /* Adjust image width as needed */
+  height: auto;
+  margin-right: 20px; /* Add spacing between image and text */
+}
+
+.container p {
+  font-size: 1rem;
 }
 
 .child img {
-  max-width: 60%;
+  max-width: 100%;
   height: auto;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.child1 img {
+  max-width: 60%;
+  height: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: -1rem;
+}
+
 /* Contact section */
 #contact {
-  padding: 2rem;
+  padding-top: 2rem;
   text-align: center;
 }
 
@@ -168,4 +229,54 @@ footer {
     margin-right: 0;
     margin-bottom: 1rem;
   }
+}
+
+
+/* CSS */
+.button-54 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-bottom: 2rem;
+}
+
+.button-54:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
+}
+
+.summary {
+  padding: 2rem;
+}
+
+.summary img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+.enhancements img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
 }

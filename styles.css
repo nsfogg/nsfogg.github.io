@@ -67,6 +67,17 @@ nav ul li a:hover {
   margin: 0 2rem 3rem; /* Add margin for spacing between projects */
 }
 
+.project1 {
+  text-align: center;
+  background-color: #eaa424;
+  color:rgb(255, 255, 255)
+}
+
+#projects h1 {
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+}
+
 .project img {
   max-width: 100%;
   height: auto;
@@ -81,22 +92,61 @@ nav ul li a:hover {
 
 /* About section */
 #about {
-  background-color: #f5f5f5;
+  background-color: #ffffff;
+  text-align: center;
   padding: 3rem 0;
 }
 
 #about p {
   font-size: 1.2rem;
+  color:#5f5f5f
+}
+
+.space {
+  line-height: 1.4;
+}
+
+.p1 {
+  line-height: 1.4;
+}
+
+.parent {
+  padding: 2rem 2rem;  
+  text-align: center;
+}
+
+.child {
+  display: inline-block;
+  padding: 1rem 1rem;
+  vertical-align:middle;
+  max-width: 50%
+}
+
+.child img {
+  max-width: 60%;
+  height: auto;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Contact section */
 #contact {
-  padding: 3rem 0;
+  padding: 2rem;
+  text-align: center;
+}
+
+ul.list {
+  display: inline-block;
+}
+
+.list li {
+  display: inline;
+  float: left;
+  padding: 50px;
+  text-align: center;
 }
 
 #contact p {
   font-size: 1.2rem;
-  margin-bottom: 2rem;
 }
 
 /* Footer */

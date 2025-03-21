@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css"> <!-- Link to your custom stylesheet -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- Google Fonts -->
+  <title>Global Leadership</title>
+</head>
+<body>
+    <header>
+        <nav>
+          <ul>
+            <li><a href="/nsfogg.github.io/index.html">Home</a></li>
+            <li><a href="/nsfogg.github.io/skills.html">Skills</a></li>
+            <li><a href="nsfogg.github.io/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+    </header>
+    <section id="home">
+        <h1>Global Leadership</h1>
+        <p class="p1">
+            Explore skills I developed as a global leader. During the first
+            3 months of 2025, I studied abroad to obtain a minor in Global
+            Leadership. I was able to travel to 4 different countries and
+            meet with industry leaders across the globe. I obtained many
+            transferable skills that will become invaluable in my career.
+            Below are some of these skills, separated into different
+            categories: intellectual, digital, social, and psychological capital.
+            Click to investigate each competency area!
+        </p>
+        <p class="p1">
+            To see how this experience has affected me, I analyzed competency
+            data and designed an architecture diagram detailing how the 
+            Global Leadership Minor can benefit any person.
+        </p>
+        <button class="button-54" role="button" onclick="document.location='skills.html'">Learn More</button>
+    </section>
+
+
+    <section id="pie">
+        <div>
+            <div class="chart-container" id="imageWrapper">
+                <!-- <img src="media/gdmi-radial.png" alt="GDMI Results"> -->
+                <!-- <img id="myImage" src="media/gdmi-radial.png" onmouseover="this.src='media/highlight-digital.png'" onmouseout="this.src='media/gdmi-radial.png'" /> -->
+                <svg viewBox="0 0 500 500">
+                    <!-- Example clickable areas (adjust coordinates accordingly) -->
+                    <polygon 
+                        points="250,250 250,0 0,0 0,250" 
+                        class="slice" 
+                        data-image="media/highlight-intellectual.png" 
+                        data-url="#skills-intellectual" 
+                        onclick="showSection('skills-intellectual')"
+                    />
+                    <polygon 
+                        points="250,250 250,0 500,0 500,250" 
+                        class="slice" 
+                        data-image="media/highlight-digital.png" 
+                        data-url="#digital" 
+                        onclick="showSection('skills-digital')"
+                    />
+                    <polygon 
+                        points="250,250 500,250 500,500 250,500" 
+                        class="slice" 
+                        data-image="media/highlight-social.png" 
+                        data-url="#social" 
+                        onclick="showSection('skills-social')"
+                    />
+                    <polygon 
+                        points="250,250 250,500 0,500 0,250" 
+                        class="slice" 
+                        data-image="media/highlight-psych.png" 
+                        data-url="#psych" 
+                        onclick="showSection('skills-psych')"
+                    />
+                </svg>
+            </div>
+        </div>
+        <div class="space">
+
+        </div>
+        <script>
+            document.querySelectorAll(".slice").forEach(slice => {
+                slice.addEventListener("mouseenter", function() {
+                    document.getElementById("imageWrapper").style.backgroundImage = `url(${this.getAttribute("data-image")})`;
+                });
+                slice.addEventListener("mouseleave", function() {
+                    document.getElementById("imageWrapper").style.backgroundImage = "url(media/gdmi-radial.png)";
+                });
+                slice.addEventListener("click", function() {
+                    document.getElementById("imageWrapper").style.backgroundImage = `url(${this.getAttribute("data-image")})`;
+                });
+            });
+            function toggleContent(sectionId) {
+                let content = document.getElementById(sectionId);
+                content.classList.toggle("hidden");
+                content.classList.toggle("visible");
+            }
+            function showSection(sectionId) {
+                // Hide all sections
+                let sections = document.querySelectorAll("div[id^='skills']");
+                sections.forEach(section => section.classList.add("hidden"));
+
+                // Show the selected section
+                document.getElementById(sectionId).classList.remove("hidden");
+                document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
+            }
+        </script>
+    </section>
+
+    <section>
+        <div id="skills-intellectual" class="hidden">
+            <div class="skills-container">
+                <div class="intellectual-header">
+                    <h1>
+                        Intellectual Capital | 3.4
+                    </h1>
+                </div>
+                <div class="intellectual-content">
+                    <div class="img-container">
+                        <img src="media/intellectual-score.png">
+                    </div>
+                    <br>
+                    <div>
+                        <h3>
+                            Cognitive Complexity
+                        </h3>
+                        <ul>
+                            <li>Your ability to grasp complex concepts quickly</li>
+                            <li>The strength of your analytical and problem solving skills</li>
+                            <li>Your ability to understand abstract ideas</li>
+                            <li>Your ability to take complex issues and explain the main points simply and understandably</li>
+                        </ul>
+                        <br>
+                    </div>
+            
+                    <div>
+                        <h3>
+                            Cosmopolitan Outlook
+                        </h3>
+                        <ul>
+                            <li>Your knowledge of cultures in different parts of the world</li>
+                            <li>Your knowledge of geography, history, and important persons of several countries</li>
+                            <li>Your knowledge of economic and political issues, concerns, hot topics, etc. of major regions of the world</li>
+                            <li>Your up-to-date knowledge of important world events</li>
+                        </ul>
+                        <br>
+                    </div>
+                    
+                    <div>
+                        <h3>
+                            Global Business Savvy
+                        </h3>
+                        <ul>
+                            <li>Your knowledge of global industry</li>
+                            <li>Your knowledge of global competitive business and marketing strategies</li>
+                            <li>Your knowledge of how to transact business and assess risks of doing business internationally</li>
+                            <li>Your knowledge of supplier options in other parts of the world</li>
+                        </ul>
+                        <br>
+                    </div>  
+                </div>
+                
+            </div>
+
+        </div>
+
+        <div id="skills-digital" class="hidden">
+            <div class="skills-container">
+                <div class="digital-header">
+                    <h1>
+                        Digital Capital | 3.4
+
+                    </h1>
+                </div>
+                <div class="digital-content">
+                    <div class="img-container">
+                        <img src="media/digital-score.png">
+                    </div>
+                    <br>
+                    <div>
+                        <h3>
+                            Digital Advocacy
+                        </h3>
+                        <ul>
+                            <li>Your knowledge of the opportunities created by digital transformation</li>
+                            <li>Your knowledge of the impact of digital transformation on client experience</li>
+                            <li>Your knowledge of the impact of digital transformation on internal operations</li>
+                            <li>Your knowledge of the impact of digital transformation on business model</li>
+                            <li>Your knowledge of the impact of digital transformation on jobs in the organization</li>
+                            <li>Your knowledge of the basics of advanced technologies</li>
+                            <li>Your knowledge of how to communicate a vision of digital transformation</li>
+                        </ul>
+                        <br>
+                    </div>
+            
+                    <div>
+                        <h3>
+                            Digital Implementation
+                        </h3>
+                        <ul>
+                            <li>Your knowledge of how to manage digital transformation</li>
+                            <li>Your knowledge of the role of Information Technology group in digital transformation</li>
+                            <li>Your knowledge of the role of middle management in digital transformation</li>
+                            <li>Your knowledge of the potential sources of resistance to digital transformation</li>
+                            <li>Your knowledge of how to build employee confidence in digital transformation</li>
+                        </ul>
+                        <br>
+                    </div>
+                    
+                    <div>
+                        <h3>
+                            Growth Mindset
+                        </h3>
+                        <ul>
+                            <li>Your ability to build trust</li>
+                            <li>Your ability to encourage continuous learning</li>
+                            <li>Your ability to encourage constructive debate</li>
+                            <li>Your ability to empower employees</li>
+                        </ul>
+                        <br>
+                    </div>  
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="skills-social" class="hidden">
+            <div class="skills-container">
+                <div class="social-header">
+                    <h1>
+                        Social Capital | 3.2
+
+                    </h1>
+                </div>
+                <div class="social-content">
+                    <div class="img-container">
+                        <img src="media/social-score.png">
+                    </div>
+                    <br>
+                    <div>
+                        <h3>
+                            Intercultural Empathy
+                        </h3>
+                        <ul>
+                            <li>Your ability to work well with people from other parts of the world</li>
+                            <li>Your ability to understand nonverbal expressions of people from other cultures</li>
+                            <li>Your ability to emotionally connect to people from other cultures</li>
+                            <li>Your ability to engage people from other parts of the world to work together</li>
+                        </ul>
+                        <br>
+                    </div>
+            
+                    <div>
+                        <h3>
+                            Interpersonal Impact
+                        </h3>
+                        <ul>
+                            <li>Your experience in negotiating contracts/agreements in other cultures</li>
+                            <li>Your strong networks with people from other cultures and with influential people</li>
+                            <li>Your reputation as a leader</li>
+                        </ul>
+                        <br>
+                    </div>
+                    
+                    <div>
+                        <h3>
+                            Diplomacy
+                        </h3>
+                        <ul>
+                            <li>Your ease of starting a conversation with a stranger</li>
+                            <li>Your ability to integrate diverse perspectives</li>
+                            <li>Your ability to listen to what others have to say</li>
+                            <li>Your willingness to collaborate</li>
+                        </ul>
+                        <br>
+                    </div>  
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="skills-psych" class="hidden">
+            <div class="skills-container">
+                <div class="psych-header">
+                    <h1>
+                        Pyschological Capital | 4.3
+
+                    </h1>
+                </div>
+                <div class="psych-content">
+                    <div class="img-container">
+                        <img src="media/psych-score.png">
+                    </div>
+                    <br>
+                    <div>
+                        <h3>
+                            Passion for Diversity
+                        </h3>
+                        <ul>
+                            <li>Your enjoyment of exploring other parts of the world</li>
+                            <li>Your enjoyment of getting to know people from other parts of the world</li>
+                            <li>Your enjoyment of living in another country</li>
+                            <li>Your enjoyment of traveling</li>
+                        </ul>
+                        <br>
+                    </div>
+            
+                    <div>
+                        <h3>
+                            Quest for Adventure
+                        </h3>
+                        <ul>
+                            <li>Your interest in dealing with challenging situations</li>
+                            <li>Your willingness to take risk</li>
+                            <li>Your willingness to test your abilities</li>
+                            <li>Your enjoyment of dealing with unpredictable situations</li>
+                        </ul>
+                        <br>
+                    </div>
+                    
+                    <div>
+                        <h3>
+                            Self Assurance
+                        </h3>
+                        <ul>
+                            <li>Your energy level</li>
+                            <li>Your self-confidence</li>
+                            <li>Your wittiness in tough situations</li>
+                            <li>Your comfort level in uncomfortable situations</li>
+                        </ul>
+                        <br>
+                    </div>  
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    <div class="p1">
+        <button class="button-54" role="button" onclick="scrollToSection('pie')">Scroll To Top</button>
+    </div>
+    <script>
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+        </script>
+</body>
+<section id="contact">
+    <h2>Contact Me</h2>
+    <ul class="list">
+        <li class="tile">Email: <a href = "mailto: nicksfogg@gmail.com">nicksfogg@gmail.com</a></li>
+        <li class="tile">Phone: (919) 518-5161</li>
+        <li class="tile">My work: <a href="https://www.github.com/nsfogg/">https://github.com/nsfogg</a></li>
+    </ul>
+  </section>
+  
+  <footer>
+    <p>&copy; 2025 Nick Fogg. All rights reserved.</p>
+  </footer>

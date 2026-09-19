@@ -39,6 +39,22 @@ const LandingPage: React.FC = () => {
 
   const projects: Project[] = [
     {
+      id: "plant-care",
+      title: "Plant Care",
+      description: "A plant watering tracker that runs entirely on GitHub \u2014 no server, no database, no cron machine. Static site on Pages, data committed to the repo, and reminders sent by a scheduled Action or subscribed straight into a phone calendar. Works offline and installs to a home screen.",
+      technologies: [
+        { name: "Vanilla JS" },
+        { name: "GitHub Actions" },
+        { name: "Service Worker" },
+        { name: "Python" }
+      ],
+      links: [
+        { type: "demo", url: "https://nsfogg.github.io/plant_watering/", label: "Open the App" },
+        { type: "github", url: "https://github.com/nsfogg/plant_watering", label: "Source Code" }
+      ],
+      gradient: "linear-gradient(135deg, #2f6d4f 0%, #7ec39a 100%)"
+    },
+    {
       id: "neural-optimizer",
       title: "Neural Architecture Optimizer",
       description: "Advanced AutoML system that automatically designs and optimizes neural network architectures using evolutionary algorithms and reinforcement learning. Achieved 15% improvement in model efficiency.",

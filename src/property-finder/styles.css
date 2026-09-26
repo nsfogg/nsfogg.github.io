@@ -1,0 +1,955 @@
+/* Property Finder — builds on the site tokens in ../styles.css (apple-ui-design). */
+
+:root {
+  --pf-water: #0a78ad;
+  --pf-water-bg: #e7f3fb;
+  --pf-new: #23843b;
+  --pf-drop: #b85a0a;
+  --pf-sidebar: 320px;
+  --pf-results: 400px;
+  --pf-header-h: 72px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pf-water: #5ac8fa;
+    --pf-water-bg: rgba(90, 200, 250, 0.14);
+    --pf-new: #30d158;
+    --pf-drop: #ff9f0a;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+}
+
+.pf {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.pf-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Header */
+
+.pf-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  min-height: var(--pf-header-h);
+  padding: var(--space-sm) var(--space-lg);
+  border-bottom: 1px solid var(--hairline);
+  background: color-mix(in srgb, var(--bg-primary) 85%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  position: relative;
+  z-index: 1000;
+}
+
+.pf-back {
+  font: var(--text-callout);
+  white-space: nowrap;
+}
+
+.pf-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.pf-heading h1 {
+  font: var(--text-headline);
+  letter-spacing: -0.01em;
+}
+
+.pf-heading p {
+  font: var(--text-caption);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pf-header-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.pf-pill,
+.pf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 980px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font: 500 15px/1 var(--font);
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.pf-pill:hover,
+.pf-btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--text-primary) 10%, var(--bg-secondary));
+}
+
+.pf-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.pf-pill:focus-visible,
+.pf-btn:focus-visible,
+.pf-chip:focus-visible,
+.pf-row:focus-visible,
+.pf-link:focus-visible,
+.btn-primary:focus-visible,
+.icon-button:focus-visible,
+.pf-segmented button:focus-visible {
+  outline: none;
+  box-shadow: var(--focus);
+}
+
+.btn-primary {
+  border: 0;
+  cursor: pointer;
+}
+
+.icon-button {
+  border: 0;
+  cursor: pointer;
+  font: 500 17px/1 var(--font);
+}
+
+.pf-count-badge {
+  min-width: 20px;
+  padding: 2px 6px;
+  border-radius: 980px;
+  background: var(--accent);
+  color: #fff;
+  font: 600 12px/16px var(--font);
+}
+
+.pf-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font: var(--text-callout);
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.pf-danger {
+  color: #d70015;
+}
+
+@media (prefers-color-scheme: dark) {
+  .pf-danger {
+    color: #ff6961;
+  }
+}
+
+.pf-banner {
+  padding: var(--space-sm) var(--space-lg);
+  background: color-mix(in srgb, #ff9f0a 16%, var(--bg-primary));
+  font: var(--text-callout);
+  text-align: center;
+}
+
+/* Three-column body */
+
+.pf-body {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: var(--pf-sidebar) minmax(0, 1fr) var(--pf-results);
+  min-height: 0;
+}
+
+.pf-sidebar {
+  overflow-y: auto;
+  border-right: 1px solid var(--hairline);
+  background: var(--bg-primary);
+}
+
+.pf-mapwrap {
+  position: relative;
+  min-height: 0;
+  /* Contain Leaflet's own z-indexes (controls use 1000) below the drawer and filter sheet. */
+  isolation: isolate;
+}
+
+.pf-map {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-secondary);
+}
+
+.pf-results {
+  overflow-y: auto;
+  border-left: 1px solid var(--hairline);
+  background: var(--bg-primary);
+}
+
+/* Filters */
+
+.pf-filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+}
+
+.pf-group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.pf-group legend {
+  margin-bottom: var(--space-sm);
+  padding: 0;
+  font: 600 13px/1.4 var(--font);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pf-filters input[type='number'],
+.pf-filters input[type='text'],
+.pf-filters input[type='search'],
+.pf-filters select,
+.pf-field input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font: var(--text-callout);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.pf-filters input:focus,
+.pf-filters select:focus,
+.pf-field input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--focus);
+}
+
+.pf-search input {
+  border-radius: 980px;
+}
+
+.pf-field {
+  display: block;
+}
+
+.pf-field > span:not(.pf-visually-hidden) {
+  display: block;
+  margin-bottom: var(--space-xs);
+  font: var(--text-caption);
+  color: var(--text-secondary);
+}
+
+.pf-range,
+.pf-inline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.pf-inline + .pf-inline {
+  margin-top: var(--space-sm);
+}
+
+.pf-range .pf-field,
+.pf-grow {
+  flex: 1;
+}
+
+.pf-narrow {
+  width: 76px;
+}
+
+.pf-unit {
+  font: var(--text-callout);
+  color: var(--text-secondary);
+}
+
+.pf-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.pf-chip {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--hairline);
+  border-radius: 980px;
+  background: transparent;
+  color: var(--text-primary);
+  font: var(--text-callout);
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+
+.pf-chip[aria-pressed='true'] {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.pf-help {
+  margin-top: var(--space-xs);
+  font: var(--text-caption);
+  color: var(--text-secondary);
+}
+
+.pf-error {
+  margin-top: var(--space-xs);
+  font: var(--text-caption);
+  color: #d70015;
+}
+
+.pf-count {
+  text-align: center;
+}
+
+.pf-filter-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+/* iOS-style switch */
+
+.pf-toggle {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  padding: var(--space-md);
+  border-radius: var(--radius-card);
+  background: var(--pf-water-bg);
+  cursor: pointer;
+}
+
+.pf-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pf-toggle-track {
+  flex: none;
+  position: relative;
+  width: 51px;
+  height: 31px;
+  border-radius: 980px;
+  background: color-mix(in srgb, var(--text-secondary) 35%, transparent);
+  transition: background-color 0.25s var(--ease);
+}
+
+.pf-toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s var(--ease);
+}
+
+.pf-toggle input:checked + .pf-toggle-track {
+  background: var(--pf-water);
+}
+
+.pf-toggle input:checked + .pf-toggle-track::after {
+  transform: translateX(20px);
+}
+
+.pf-toggle input:focus-visible + .pf-toggle-track {
+  box-shadow: var(--focus);
+}
+
+.pf-toggle .pf-help {
+  display: block;
+}
+
+.pf-toggle-title {
+  display: block;
+  font: 600 17px/1.3 var(--font);
+  color: var(--pf-water);
+}
+
+/* Results list */
+
+.pf-list > li + li {
+  border-top: 1px solid var(--hairline);
+}
+
+.pf-row {
+  display: flex;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease);
+}
+
+.pf-row:hover {
+  background: var(--bg-secondary);
+}
+
+.pf-row[aria-current='true'] {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.pf-row-photo {
+  flex: none;
+  width: 88px;
+  height: 88px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--bg-secondary);
+}
+
+.pf-row-photo--none {
+  display: block;
+  background:
+    radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--text-secondary) 18%, transparent), transparent 60%),
+    var(--bg-secondary);
+}
+
+.pf-row-photo--none.is-water {
+  background:
+    repeating-linear-gradient(170deg, transparent 0 10px, color-mix(in srgb, var(--pf-water) 22%, transparent) 10px 12px),
+    var(--pf-water-bg);
+}
+
+.pf-row-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pf-row-price {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font: 600 19px/1.3 var(--font);
+}
+
+.pf-row-facts {
+  font: var(--text-callout);
+}
+
+.pf-row-address {
+  font: var(--text-caption);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pf-row-water {
+  font: 500 13px/1.4 var(--font);
+  color: var(--pf-water);
+}
+
+.pf-row-near {
+  font: var(--text-caption);
+  color: var(--text-secondary);
+}
+
+.pf-tag {
+  padding: 1px 8px;
+  border-radius: 980px;
+  font: 600 11px/1.6 var(--font);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.pf-tag--new {
+  background: color-mix(in srgb, var(--pf-new) 14%, transparent);
+  color: var(--pf-new);
+}
+
+.pf-tag--drop {
+  background: color-mix(in srgb, var(--pf-drop) 14%, transparent);
+  color: var(--pf-drop);
+}
+
+.pf-more {
+  padding: var(--space-lg);
+  text-align: center;
+}
+
+.pf-empty,
+.pf-panel-empty {
+  padding: var(--space-xl) var(--space-lg);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.pf-empty-title {
+  font: var(--text-headline);
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+/* Map pins */
+
+.pf-pin {
+  display: inline-block;
+  transform: translate(-50%, -50%);
+  padding: 3px 8px;
+  border-radius: 980px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font: 600 12px/1.3 var(--font);
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s var(--ease);
+}
+
+.pf-pin--water {
+  background: var(--pf-water);
+  color: #fff;
+}
+
+.pf-pin--selected {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.pf-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 88%, transparent);
+  color: #fff;
+  font: 600 13px/1 var(--font);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.pf-cluster--water {
+  background: color-mix(in srgb, var(--pf-water) 90%, transparent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--pf-water) 25%, transparent);
+}
+
+.leaflet-container {
+  font: var(--text-caption);
+}
+
+/* Listing drawer */
+
+.pf-drawer {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  bottom: var(--space-md);
+  z-index: 900;
+  width: min(420px, calc(100% - 2 * var(--space-md)));
+  overflow-y: auto;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);
+  animation: pf-slide 0.35s var(--ease);
+}
+
+@keyframes pf-slide {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pf-drawer-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-sm);
+  height: 0;
+  overflow: visible;
+}
+
+.pf-gallery {
+  position: relative;
+}
+
+.pf-gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.pf-gallery-nav {
+  position: absolute;
+  bottom: var(--space-sm);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 4px;
+  border-radius: 980px;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font: var(--text-caption);
+}
+
+.pf-drawer-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+}
+
+.pf-drawer-price {
+  font: var(--text-title);
+  letter-spacing: -0.02em;
+}
+
+.pf-drawer-address {
+  font: var(--text-body);
+  color: var(--text-secondary);
+}
+
+.pf-water-callout {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+  border-radius: 14px;
+  background: var(--bg-secondary);
+  font: var(--text-callout);
+}
+
+.pf-water-callout.is-waterfront {
+  background: var(--pf-water-bg);
+  color: var(--pf-water);
+}
+
+.pf-facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md) var(--space-sm);
+}
+
+.pf-fact dt {
+  font: var(--text-caption);
+  color: var(--text-secondary);
+}
+
+.pf-fact dd {
+  font: 600 15px/1.4 var(--font);
+}
+
+.pf-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.pf-description {
+  font: var(--text-callout);
+  white-space: pre-line;
+}
+
+.pf-history h3,
+.pf-settings h3 {
+  font: 600 13px/1.4 var(--font);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-sm);
+}
+
+.pf-history li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font: var(--text-callout);
+  border-top: 1px solid var(--hairline);
+}
+
+.pf-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md) var(--space-lg);
+}
+
+.pf-attribution {
+  font: var(--text-caption);
+  color: var(--text-secondary);
+}
+
+/* Sheets (saved searches, settings) */
+
+.pf-sheet {
+  width: min(520px, calc(100vw - 32px));
+  max-height: min(80dvh, 720px);
+  padding: 0;
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-card);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
+}
+
+.pf-sheet::backdrop {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+}
+
+.pf-sheet-head {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--hairline);
+  background: var(--bg-card);
+}
+
+.pf-sheet-head h2 {
+  font: var(--text-headline);
+}
+
+.pf-sheet-body {
+  padding: var(--space-lg);
+}
+
+.pf-saved-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.pf-saved-apply {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  min-height: 52px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-primary);
+  font: var(--text-body);
+  text-align: left;
+  cursor: pointer;
+}
+
+.pf-saved-alert {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: var(--text-callout);
+  color: var(--text-secondary);
+}
+
+.pf-saved-footer {
+  margin-top: var(--space-lg);
+}
+
+.pf-save-form,
+.pf-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.pf-settings section + section {
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--hairline);
+}
+
+.pf-kv {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px var(--space-md);
+  font: var(--text-callout);
+}
+
+.pf-kv dt {
+  color: var(--text-secondary);
+}
+
+.pf-notes {
+  margin-top: var(--space-sm);
+  font: var(--text-caption);
+  color: var(--pf-drop);
+}
+
+.pf-status {
+  max-width: 560px;
+  margin: 20vh auto 0;
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.pf-status h1 {
+  font: var(--text-title);
+  color: var(--text-primary);
+  margin-bottom: var(--space-md);
+}
+
+.pf-only-mobile {
+  display: none;
+}
+
+.pf-segmented {
+  display: none;
+}
+
+/* Medium: drop the results column under the drawer width */
+
+@media (max-width: 1180px) {
+  :root {
+    --pf-sidebar: 290px;
+    --pf-results: 340px;
+  }
+  .pf-row-photo {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+/* Phones and small tablets: one pane at a time */
+
+@media (max-width: 860px) {
+  .pf-header {
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+  }
+  .pf-back {
+    display: none;
+  }
+  .pf-only-mobile {
+    display: inline-flex;
+  }
+  .pf-pill {
+    padding: 0 14px;
+  }
+  .pf-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pf-heading p {
+    display: none;
+  }
+  .pf-sidebar {
+    position: absolute;
+    inset: 0;
+    z-index: 950;
+    display: none;
+    border: 0;
+    padding-bottom: 96px;
+  }
+  .pf-sidebar[data-open='true'] {
+    display: block;
+  }
+  .pf-show-results {
+    position: sticky;
+    bottom: var(--space-md);
+    left: 0;
+    width: calc(100% - 2 * var(--space-lg));
+    margin: 0 var(--space-lg);
+  }
+  .pf[data-view='list'] .pf-mapwrap,
+  .pf[data-view='map'] .pf-results {
+    display: none;
+  }
+  .pf-results {
+    border: 0;
+    padding-bottom: 88px;
+  }
+  .pf-segmented {
+    display: flex;
+    position: fixed;
+    bottom: calc(var(--space-md) + env(safe-area-inset-bottom));
+    left: 50%;
+    z-index: 940;
+    transform: translateX(-50%);
+    padding: 4px;
+    border-radius: 980px;
+    background: color-mix(in srgb, var(--bg-secondary) 88%, transparent);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  }
+  .pf-segmented button {
+    min-width: 88px;
+    min-height: 40px;
+    border: 0;
+    border-radius: 980px;
+    background: transparent;
+    color: var(--text-primary);
+    font: 500 15px/1 var(--font);
+    cursor: pointer;
+  }
+  .pf-segmented button[aria-pressed='true'] {
+    background: var(--bg-card);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  }
+  .pf-drawer {
+    inset: 0;
+    width: 100%;
+    border-radius: 0;
+    border: 0;
+    z-index: 960;
+  }
+  .pf-facts {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-drawer {
+    animation: none;
+  }
+}

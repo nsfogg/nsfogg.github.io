@@ -110,15 +110,16 @@ export const projects: Project[] = [
     name: 'Property Finder',
     tagline: 'Home search that knows which houses are really on the water.',
     description:
-      'A listing search app that ingests for-sale listings into PostGIS and flags waterfront homes by checking each property against real OpenStreetMap lake, river and coastline shapes — not by trusting the listing text.',
+      'Seattle homes for sale, with waterfront homes flagged by checking each property against real OpenStreetMap lake, river and coastline shapes — not by trusting the listing text. It runs entirely on GitHub: no server, no database.',
     details: [
-      'Pluggable source adapters feed a scheduled ingestion pipeline that deduplicates listings across sources and keeps each raw payload next to its normalized row.',
-      'A composable filter API covers price, size, lot, year built, days on market, amenities pulled from descriptions and distance from any city.',
-      'Saved searches are re-checked on every ingestion run and raise alerts for new matches, shown on a clustered map that stays in sync with the results list.',
+      'A scheduled GitHub Action pulls listings through pluggable source adapters, deduplicates them, tracks price changes and measures each home’s distance to the nearest water edge.',
+      'The page filters everything in the browser — price, size, lot, year built, days on market, amenities and distance from any place — on a clustered map that stays in sync with the list.',
+      'Saved searches show what’s new since your last visit, and the Action posts new matches and price cuts to Discord.',
     ],
-    stack: ['Python', 'FastAPI', 'PostgreSQL', 'PostGIS', 'React', 'Leaflet', 'Docker'],
+    stack: ['TypeScript', 'React', 'Leaflet', 'Turf.js', 'OpenStreetMap', 'GitHub Actions'],
     art: 'waterfront',
-    code: 'https://github.com/nsfogg/property-finder',
+    code: 'https://github.com/nsfogg/nsfogg.github.io/tree/main/property-finder',
+    live: 'https://nsfogg.github.io/property-finder/',
   },
   {
     name: 'Plant Care',

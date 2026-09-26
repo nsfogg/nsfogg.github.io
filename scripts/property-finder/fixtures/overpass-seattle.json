@@ -1,0 +1,65 @@
+{
+  "_comment": "Hand-simplified Seattle water shapes for tests and --fixtures runs. Real runs query Overpass.",
+  "elements": [
+    {
+      "type": "relation", "id": 1001, "tags": { "natural": "water", "name": "Lake Washington", "type": "multipolygon" },
+      "members": [
+        { "type": "way", "role": "outer", "geometry": [
+          {"lat": 47.505, "lon": -122.245}, {"lat": 47.520, "lon": -122.262}, {"lat": 47.545, "lon": -122.258},
+          {"lat": 47.570, "lon": -122.272}, {"lat": 47.595, "lon": -122.284}, {"lat": 47.620, "lon": -122.281},
+          {"lat": 47.636, "lon": -122.277}, {"lat": 47.645, "lon": -122.296}, {"lat": 47.656, "lon": -122.276},
+          {"lat": 47.673, "lon": -122.262}, {"lat": 47.690, "lon": -122.252}, {"lat": 47.720, "lon": -122.262},
+          {"lat": 47.745, "lon": -122.270}, {"lat": 47.760, "lon": -122.255}
+        ]},
+        { "type": "way", "role": "outer", "geometry": [
+          {"lat": 47.760, "lon": -122.255}, {"lat": 47.740, "lon": -122.225}, {"lat": 47.690, "lon": -122.210},
+          {"lat": 47.650, "lon": -122.215}, {"lat": 47.615, "lon": -122.205}, {"lat": 47.575, "lon": -122.200},
+          {"lat": 47.530, "lon": -122.200}, {"lat": 47.505, "lon": -122.210}, {"lat": 47.505, "lon": -122.245}
+        ]},
+        { "type": "way", "role": "inner", "geometry": [
+          {"lat": 47.527, "lon": -122.245}, {"lat": 47.560, "lon": -122.250}, {"lat": 47.595, "lon": -122.240},
+          {"lat": 47.598, "lon": -122.220}, {"lat": 47.570, "lon": -122.210}, {"lat": 47.535, "lon": -122.215},
+          {"lat": 47.527, "lon": -122.245}
+        ]}
+      ]
+    },
+    {
+      "type": "way", "id": 2001, "tags": { "natural": "water", "water": "lake", "name": "Green Lake" },
+      "geometry": [
+        {"lat": 47.6765, "lon": -122.3405}, {"lat": 47.6780, "lon": -122.3345}, {"lat": 47.6830, "lon": -122.3330},
+        {"lat": 47.6860, "lon": -122.3380}, {"lat": 47.6845, "lon": -122.3450}, {"lat": 47.6790, "lon": -122.3460},
+        {"lat": 47.6765, "lon": -122.3405}
+      ]
+    },
+    {
+      "type": "way", "id": 2002, "tags": { "natural": "water", "water": "lake", "name": "Lake Union" },
+      "geometry": [
+        {"lat": 47.6250, "lon": -122.3400}, {"lat": 47.6270, "lon": -122.3290}, {"lat": 47.6400, "lon": -122.3250},
+        {"lat": 47.6500, "lon": -122.3330}, {"lat": 47.6480, "lon": -122.3450}, {"lat": 47.6350, "lon": -122.3430},
+        {"lat": 47.6250, "lon": -122.3400}
+      ]
+    },
+    {
+      "type": "way", "id": 2003, "tags": { "natural": "water", "water": "basin", "name": "Stormwater basin" },
+      "geometry": [
+        {"lat": 47.7000, "lon": -122.3000}, {"lat": 47.7000, "lon": -122.2990}, {"lat": 47.7007, "lon": -122.2990},
+        {"lat": 47.7007, "lon": -122.3000}, {"lat": 47.7000, "lon": -122.3000}
+      ]
+    },
+    {
+      "type": "way", "id": 3001, "tags": { "natural": "coastline" },
+      "geometry": [
+        {"lat": 47.500, "lon": -122.395}, {"lat": 47.540, "lon": -122.400}, {"lat": 47.575, "lon": -122.415},
+        {"lat": 47.582, "lon": -122.395}, {"lat": 47.595, "lon": -122.370}, {"lat": 47.605, "lon": -122.345}
+      ]
+    },
+    {
+      "type": "way", "id": 3002, "tags": { "natural": "coastline" },
+      "geometry": [
+        {"lat": 47.615, "lon": -122.360}, {"lat": 47.630, "lon": -122.395}, {"lat": 47.645, "lon": -122.415},
+        {"lat": 47.665, "lon": -122.405}, {"lat": 47.685, "lon": -122.400}, {"lat": 47.705, "lon": -122.385},
+        {"lat": 47.735, "lon": -122.378}
+      ]
+    }
+  ]
+}

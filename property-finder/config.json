@@ -1,0 +1,11 @@
+{
+  "areas": [
+    { "name": "Seattle", "enabled": true, "query": { "city": "Seattle", "state": "WA" } },
+    { "name": "Mercer Island", "enabled": false, "query": { "city": "Mercer Island", "state": "WA" } },
+    { "name": "Bellevue", "enabled": false, "query": { "city": "Bellevue", "state": "WA" } },
+    { "name": "Kirkland", "enabled": false, "query": { "city": "Kirkland", "state": "WA" } }
+  ],
+  "waterfrontThresholdM": 100,
+  "monthlyCallLimit": 45,
+  "offMarketDropAfterDays": 21
+}

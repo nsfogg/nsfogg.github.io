@@ -1,0 +1,24 @@
+[
+  {
+    "mlsId": 1005192,
+    "listingId": "49699",
+    "listPrice": 20714261,
+    "listDate": "2011-05-23T18:50:30.184391Z",
+    "address": { "streetNumber": "74434", "streetName": "East Sweet Bottom Br #18393", "city": "Houston", "state": "Texas", "postalCode": "77096", "full": "74434 East Sweet Bottom Br #18393" },
+    "geo": { "lat": 29.689418, "lng": -95.474464 },
+    "property": { "area": 1043, "bedrooms": 2, "bathsFull": 2, "bathsHalf": 5, "lotSize": "0-.49 Acres", "yearBuilt": 1995, "type": "RES", "subType": "Condominium" },
+    "mls": { "status": "Active", "daysOnMarket": 36 },
+    "association": { "fee": 0 },
+    "office": { "name": "Sample office" },
+    "photos": ["https://s3-us-west-2.amazonaws.com/cdn.simplyrets.com/properties/trial/home1.jpg"],
+    "remarks": "Waterfront condo with a private dock and a pool."
+  },
+  {
+    "mlsId": 1005193,
+    "listPrice": 350000,
+    "address": { "full": "1 No Coordinates St", "city": "Houston", "state": "Texas", "postalCode": "77096" },
+    "geo": { "lat": null, "lng": null },
+    "property": {},
+    "mls": { "status": "Active" }
+  }
+]

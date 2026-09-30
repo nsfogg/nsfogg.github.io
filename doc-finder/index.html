@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; connect-src 'self' https://api.github.com blob: data:; img-src 'self' blob: data:; frame-src 'self' blob:; object-src 'self' blob:; style-src 'self'; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1f3a5f">
+  <title>Doc Finder</title>
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <noscript><p class="noscript">Doc Finder needs JavaScript.</p></noscript>
+
+  <!-- Sign in with GitHub token -->
+  <main id="screen-signin" class="screen auth" hidden>
+    <form id="signin-form" class="card auth-card" autocomplete="off">
+      <div class="brand"><img src="icon.svg" alt="" width="40" height="40"><h1>Doc Finder</h1></div>
+      <p class="muted">Your private, encrypted document vault.</p>
+      <label for="signin-token">GitHub access token</label>
+      <input id="signin-token" type="password" required spellcheck="false" autocapitalize="off" placeholder="github_pat_…">
+      <p class="hint">A fine-grained token with <b>Contents: Read and write</b> on <code id="signin-repo"></code>. <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Create one</a>.</p>
+      <label class="check"><input id="signin-remember" type="checkbox"> Keep me signed in on this device</label>
+      <p id="signin-error" class="error" role="alert" hidden></p>
+      <button type="submit" class="primary">Continue</button>
+    </form>
+  </main>
+
+  <!-- Unlock or create the vault with a passphrase -->
+  <main id="screen-unlock" class="screen auth" hidden>
+    <form id="unlock-form" class="card auth-card" autocomplete="off">
+      <div class="brand"><img src="icon.svg" alt="" width="40" height="40"><h1 id="unlock-title">Unlock vault</h1></div>
+      <p class="muted">Signed in as <b id="unlock-user"></b> <span id="unlock-role" class="badge"></span></p>
+      <div id="unlock-create-note" class="note" hidden>
+        Choose a vault passphrase. It encrypts your documents in this browser before they are uploaded.
+        <b>It cannot be recovered</b> — if you forget it, your documents are unreadable. Store it in a password manager.
+      </div>
+      <label for="unlock-pass">Vault passphrase</label>
+      <input id="unlock-pass" type="password" required autocomplete="current-password">
+      <div id="unlock-confirm-wrap" hidden>
+        <label for="unlock-confirm">Confirm passphrase</label>
+        <input id="unlock-confirm" type="password" autocomplete="new-password">
+      </div>
+      <p id="unlock-error" class="error" role="alert" hidden></p>
+      <button type="submit" class="primary" id="unlock-submit">Unlock</button>
+      <button type="button" class="link" id="unlock-signout">Use a different account</button>
+    </form>
+  </main>
+
+  <!-- Main app -->
+  <div id="screen-main" class="screen" hidden>
+    <header class="topbar">
+      <div class="brand small"><img src="icon.svg" alt="" width="28" height="28"><span>Doc Finder</span></div>
+      <div class="topbar-actions">
+        <span class="whoami"><span id="main-user"></span> <span id="main-role" class="badge"></span></span>
+        <button type="button" id="btn-users" class="ghost" hidden>Users</button>
+        <button type="button" id="btn-settings" class="ghost">Settings</button>
+        <button type="button" id="btn-lock" class="ghost">Lock</button>
+      </div>
+    </header>
+
+    <section class="searchbar">
+      <div class="search-wrap">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.4-1.42 1.4-5.39-5.38A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z" fill="currentColor"/></svg>
+        <input id="search" type="search" placeholder="Search titles, tags and document text…  (press / )" autocomplete="off" spellcheck="false" aria-label="Search documents">
+      </div>
+      <div class="search-actions" id="add-actions">
+        <button type="button" id="btn-scan" class="primary">Scan</button>
+        <button type="button" id="btn-upload" class="secondary">Upload</button>
+        <input id="file-upload" type="file" multiple hidden accept="application/pdf,image/*,text/plain,.txt,.md,.csv,.eml,.doc,.docx,.xls,.xlsx">
+      </div>
+    </section>
+
+    <section class="filters">
+      <div id="category-chips" class="chips" role="toolbar" aria-label="Filter by category"></div>
+      <label class="sort">Sort
+        <select id="sort">
+          <option value="relevance">Best match</option>
+          <option value="added">Recently added</option>
+          <option value="date">Document date</option>
+          <option value="title">Title</option>
+        </select>
+      </label>
+    </section>
+
+    <p id="result-count" class="muted result-count" aria-live="polite"></p>
+    <ul id="results" class="results"></ul>
+    <div id="empty-state" class="empty" hidden>
+      <h2>No documents yet</h2>
+      <p>Scan a letter with your phone's camera or upload PDFs and photos. Everything is encrypted before it leaves this device.</p>
+    </div>
+  </div>
+
+  <!-- Add documents (upload review / scanner) -->
+  <dialog id="dlg-add" class="dialog wide">
+    <form method="dialog" class="dialog-body" id="add-form">
+      <header class="dialog-head"><h2 id="add-title">Add documents</h2><button type="button" class="icon-btn" data-close aria-label="Close">×</button></header>
+      <div id="scan-panel" hidden>
+        <p class="muted">Take a photo of each page. Pages are combined into one PDF.</p>
+        <div id="scan-pages" class="scan-pages"></div>
+        <div class="row">
+          <button type="button" id="scan-add-page" class="secondary">+ Add page</button>
+          <label class="check"><input type="checkbox" id="scan-enhance" checked> Enhance (black &amp; white)</label>
+        </div>
+        <input id="scan-input" type="file" accept="image/*" capture="environment" multiple hidden>
+      </div>
+      <div id="add-items" class="add-items"></div>
+      <footer class="dialog-foot">
+        <span id="add-status" class="muted" aria-live="polite"></span>
+        <button type="button" class="ghost" data-close>Cancel</button>
+        <button type="button" id="add-save" class="primary">Encrypt &amp; save</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <!-- View / edit a document -->
+  <dialog id="dlg-doc" class="dialog wide">
+    <div class="dialog-body">
+      <header class="dialog-head"><h2 id="doc-title"></h2><button type="button" class="icon-btn" data-close aria-label="Close">×</button></header>
+      <div class="doc-layout">
+        <div id="doc-preview" class="doc-preview"></div>
+        <form id="doc-form" class="doc-meta"></form>
+      </div>
+      <footer class="dialog-foot">
+        <button type="button" id="doc-delete" class="danger">Delete</button>
+        <span class="spacer"></span>
+        <button type="button" id="doc-open" class="ghost">Open in new tab</button>
+        <button type="button" id="doc-download" class="secondary">Download</button>
+        <button type="button" id="doc-save" class="primary">Save changes</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <!-- Admin: manage users -->
+  <dialog id="dlg-users" class="dialog">
+    <div class="dialog-body">
+      <header class="dialog-head"><h2>Users &amp; roles</h2><button type="button" class="icon-btn" data-close aria-label="Close">×</button></header>
+      <p class="muted">People listed here can sign in with their own GitHub token and get their own separately encrypted vault. They also need to be a collaborator on the private repository.</p>
+      <table class="users-table"><thead><tr><th>GitHub user</th><th>Role</th><th></th></tr></thead><tbody id="users-body"></tbody></table>
+      <form id="users-add" class="row wrap">
+        <input id="users-login" placeholder="GitHub username" required spellcheck="false" autocapitalize="off">
+        <select id="users-role"></select>
+        <button type="submit" class="secondary">Add user</button>
+      </form>
+      <dl id="roles-help" class="roles-help"></dl>
+      <p id="users-error" class="error" role="alert" hidden></p>
+    </div>
+  </dialog>
+
+  <!-- Settings -->
+  <dialog id="dlg-settings" class="dialog">
+    <div class="dialog-body">
+      <header class="dialog-head"><h2>Settings</h2><button type="button" class="icon-btn" data-close aria-label="Close">×</button></header>
+      <h3>Change vault passphrase</h3>
+      <form id="pass-form" class="stack" autocomplete="off">
+        <input id="pass-old" type="password" placeholder="Current passphrase" required autocomplete="current-password">
+        <input id="pass-new" type="password" placeholder="New passphrase (12+ characters)" required autocomplete="new-password">
+        <input id="pass-new2" type="password" placeholder="Confirm new passphrase" required autocomplete="new-password">
+        <button type="submit" class="secondary">Change passphrase</button>
+        <p id="pass-msg" class="muted" role="status"></p>
+      </form>
+      <h3>Session</h3>
+      <p class="muted">Vault storage: <code id="settings-repo"></code></p>
+      <button type="button" id="btn-signout" class="danger">Sign out and forget token</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="busy" class="busy" hidden><div class="spinner"></div><p id="busy-text"></p></div>
+</body>
+</html>

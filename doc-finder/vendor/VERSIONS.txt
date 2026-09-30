@@ -1,0 +1,5 @@
+tesseract.js 7.0.0
+tesseract.js-core 7.0.0
+@tesseract.js-data/eng 1.0.0 (4.0.0_best_int)
+pdfjs-dist 3.11.174
+jspdf 4.2.1
